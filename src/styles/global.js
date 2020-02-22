@@ -11,6 +11,7 @@ export default createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+    font-family: Roboto, sans-serif;
   }
 
   a {
@@ -31,7 +32,7 @@ export default createGlobalStyle`
   }
 
   body, input, button {
-    font: 14px Roboto, sans-serif;
+    font-size:14px;
   }
 
   #root {
