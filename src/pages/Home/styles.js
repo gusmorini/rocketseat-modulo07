@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const ProductList = styled.ul`
   display: grid;
@@ -37,9 +38,13 @@ export const ProductList = styled.ul`
       border-radius: 4px;
       overflow: hidden;
       margin-top: auto;
-
       display: flex;
       align-items: center;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.03, '#7159c1')};
+      }
 
       div {
         display: flex;
