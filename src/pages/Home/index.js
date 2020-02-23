@@ -1,107 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import { MdAddShoppingCart } from 'react-icons/md';
 
+import api from '../../services/api';
+
 import { ProductList } from './styles';
 
-export default function Home() {
-  return (
-    <ProductList>
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
+export default class Home extends Component {
+  state = {
+    products: [],
+  };
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
+  async componentDidMount() {
+    const response = await api.get('products');
+    this.setState({ products: response.data });
+  }
 
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
+  render() {
+    const { products } = this.state;
 
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
+    return (
+      <ProductList>
+        {products.map(pro => (
+          <li key={String(pro.id)}>
+            <img src={pro.image} alt={pro.title} />
+            <strong>{pro.title}</strong>
+            <span>{pro.price}</span>
 
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-
-      <li>
-        <img
-          src="https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(90)/adaption/catalog/kits/2-pares/preto-cinza.jpg"
-          alt="Tênis"
-        />
-        <strong>Tênis zuado</strong>
-        <span>R$ 119,90</span>
-
-        <button type="button">
-          <div>
-            <MdAddShoppingCart /> 3
-          </div>
-          <span>Adicionar ao Carrinho</span>
-        </button>
-      </li>
-    </ProductList>
-  );
+            <button type="button">
+              <div>
+                <MdAddShoppingCart /> 3
+              </div>
+              <span>Adicionar ao Carrinho</span>
+            </button>
+          </li>
+        ))}
+      </ProductList>
+    );
+  }
 }
