@@ -32,11 +32,14 @@ module.exports = {
       { extensions: ['.jsx', '.js'] }
     ],
     'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
     'no-console': ['error', { allow: ['tron'] }]
   },
 };
 
 /**
- *  'no-console': ['error', { allow: ['tron'] }]
- *  permite o uso de console.tron
+ * 'no-console': ['error', { allow: ['tron'] }]
+ * permite o uso de console.tron
+ *
+ * 'no-param-reassign': 'off', desativa alguma coisa que faz alguma coisa
  */
