@@ -4,10 +4,10 @@ export default function cart(state = [], action) {
   switch (action.type) {
     case 'ADD_TO_CART':
       return produce(state, draft => {
-        const prodIndex = draft.findIndex(p => p.id === action.product.id);
+        const index = draft.findIndex(p => p.id === action.product.id);
 
-        if (prodIndex >= 0) {
-          draft[prodIndex].amount += 1;
+        if (index >= 0) {
+          draft[index].amount += 1;
         } else {
           draft.push({
             ...action.product,
@@ -15,6 +15,16 @@ export default function cart(state = [], action) {
           });
         }
       });
+
+    case 'REMOVE_TO_CART':
+      return produce(state, draft => {
+        const index = draft.findIndex(i => i.id === action.id);
+
+        if (index >= 0) {
+          draft.splice(index, 1);
+        }
+      });
+
     default:
       return state;
   }
