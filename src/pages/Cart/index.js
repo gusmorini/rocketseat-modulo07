@@ -12,7 +12,28 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({ cart, removeFromCart }) {
+/**
+ * desentruturação da props dentro das chaves
+ */
+
+function Cart({ cart, removeFromCart, updateAmount }) {
+  function increment(prod) {
+    updateAmount(prod.id, prod.amount + 1);
+  }
+
+  function decrement(prod) {
+    updateAmount(prod.id, prod.amount - 1);
+  }
+
+  /**
+   * O action apenas dispara a função
+   * as verificações devem ser feitas
+   * dentro do reducer Cart
+   *
+   * quem tem que se virar com a regra de negócio é o reducer
+   * o front apenas dispara a função
+   */
+
   return (
     <Container>
       <ProductTable>
@@ -38,11 +59,11 @@ function Cart({ cart, removeFromCart }) {
                 </td>
                 <td>
                   <div>
-                    <button type="button">
+                    <button type="button" onClick={() => decrement(item)}>
                       <MdRemoveCircleOutline />
                     </button>
                     <input type="text" readOnly value={item.amount} />
-                    <button type="button">
+                    <button type="button" onClick={() => increment(item)}>
                       <MdAddCircleOutline />
                     </button>
                   </div>

@@ -12,7 +12,15 @@ export function removeFromCart(id) {
   };
 }
 
+export function updateAmount(id, amount) {
+  return {
+    type: '@cart/UPDATE_AMOUNT',
+    id,
+    amount,
+  };
+}
+
 /**
  * dica, dar o type para action com o nome do módulo
- * facilita o debu
+ * facilita o debug
  */
