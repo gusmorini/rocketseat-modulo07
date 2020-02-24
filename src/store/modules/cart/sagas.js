@@ -19,4 +19,4 @@ function* addToCart({ id }) {
  * o yield equivale ao await
  */
 
-export default all([takeLatest('@cart/ADD_REQUEST', addToCartSuccess)]);
+export default all([takeLatest('@cart/ADD_REQUEST', addToCart)]);
