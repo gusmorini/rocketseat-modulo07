@@ -31,6 +31,12 @@ module.exports = {
       'warn',
       { extensions: ['.jsx', '.js'] }
     ],
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'no-console': ['error', { allow: ['tron'] }]
   },
 };
+
+/**
+ *  'no-console': ['error', { allow: ['tron'] }]
+ *  permite o uso de console.tron
+ */
