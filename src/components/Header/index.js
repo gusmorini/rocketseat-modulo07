@@ -29,11 +29,16 @@ function Header({ cart }) {
   );
 }
 
-export default connect(state => ({
+const mapStateToProps = state => ({
   cart: state.cart,
-}))(Header);
+});
+
+export default connect(mapStateToProps)(Header);
 
 /**
  * state.cart se refere ao reducer cart criado no rootReducer
  * ele pode ser acessado dentro da classe pelo props.cart
+ *
+ * mapStateToProps é uma função que auxilia a converter os reducers 'state' em props
+ *
  */
