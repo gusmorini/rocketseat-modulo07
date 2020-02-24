@@ -102,7 +102,7 @@ function Cart({ cart, removeFromCart, updateAmount, total }) {
  * e reduzir ele a um único valor no caso
  * pega todo o array cart e transforma em um
  * único valor total, o 0 no final significa
- * o valor que o amount vai iniciar
+ * o valor que o tot vai iniciar
  *
  * formatPrice vai apenas formatar o total para exibição
  */
@@ -112,8 +112,8 @@ const mapStateToProps = state => ({
     subtotal: formatPrice(p.price * p.amount),
   })),
   total: formatPrice(
-    state.cart.reduce((amount, p) => {
-      return amount + p.price * p.amount;
+    state.cart.reduce((tot, p) => {
+      return tot + p.price * p.amount;
     }, 0)
   ),
 });

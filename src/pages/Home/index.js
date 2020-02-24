@@ -31,6 +31,7 @@ class Home extends Component {
 
   render() {
     const { products } = this.state;
+    const { amount } = this.props;
 
     return (
       <ProductList>
@@ -42,7 +43,7 @@ class Home extends Component {
 
             <button type="button" onClick={() => this.handleAddProduct(pro)}>
               <div>
-                <MdAddShoppingCart /> 3
+                <MdAddShoppingCart /> {amount[pro.id] || 0}
               </div>
               <span>Adicionar ao Carrinho</span>
             </button>
@@ -53,10 +54,17 @@ class Home extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, prod) => {
+    amount[prod.id] = prod.amount;
+    return amount;
+  }, {}),
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
 /**
  * Connect do react-redux retorna uma função que chama a Home
