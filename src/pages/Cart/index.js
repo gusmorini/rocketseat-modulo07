@@ -10,13 +10,15 @@ import {
 
 import * as CartActions from '../../store/modules/cart/actions';
 
+import { formatPrice } from '../../util/format';
+
 import { Container, ProductTable, Total } from './styles';
 
 /**
  * desentruturação da props dentro das chaves
  */
 
-function Cart({ cart, removeFromCart, updateAmount }) {
+function Cart({ cart, removeFromCart, updateAmount, total }) {
   function increment(prod) {
     updateAmount(prod.id, prod.amount + 1);
   }
@@ -69,7 +71,7 @@ function Cart({ cart, removeFromCart, updateAmount }) {
                   </div>
                 </td>
                 <td>
-                  <strong>R$239,80</strong>
+                  <strong>{item.subtotal}</strong>
                 </td>
                 <td>
                   <button type="button" onClick={() => removeFromCart(item.id)}>
@@ -85,15 +87,35 @@ function Cart({ cart, removeFromCart, updateAmount }) {
 
         <Total>
           <span>Total:</span>
-          <strong>R$239,80</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
   );
 }
 
+/**
+ * realizar os calculos de subtotal dentro do mapStateProps
+ * para reduzir consumo de recursos da aplicação
+ *
+ * reduce é quando se quer pegar um array
+ * e reduzir ele a um único valor no caso
+ * pega todo o array cart e transforma em um
+ * único valor total, o 0 no final significa
+ * o valor que o amount vai iniciar
+ *
+ * formatPrice vai apenas formatar o total para exibição
+ */
 const mapStateToProps = state => ({
-  cart: state.cart,
+  cart: state.cart.map(p => ({
+    ...p,
+    subtotal: formatPrice(p.price * p.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((amount, p) => {
+      return amount + p.price * p.amount;
+    }, 0)
+  ),
 });
 
 const mapDispatchToProps = dispatch =>
