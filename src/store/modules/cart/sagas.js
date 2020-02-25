@@ -13,15 +13,30 @@ function* addToCart({ id }) {
   // tratavivas do produto antes de ser adicionado ao carrinho
   // verifica se o produto já existe no carrinho
   const exists = yield select(state => state.cart.find(p => p.id === id));
+  // busca a referencia do produto no estoque
+  const stock = yield call(api.get, `stock/${id}`);
+  // armazena somente o valor do amount estoque
+  const stockAmount = stock.data.amount;
+  // armazena o valor do amount antes da adição do novo produto
+  // se o produto já existe armazena o valor se não existe vale 0
+  const currentAmount = exists ? exists.amount : 0;
+  // define o novo amount do produto
+  const amount = currentAmount + 1;
+
+  // se o novo amount for maior que o estoque disponível retorna erro
+  if (amount > stockAmount) {
+    console.tron.warn('ERRO');
+    return;
+  }
+
   if (exists) {
-    // se existe só altera a quantidade para + 1
-    const amount = exists.amount + 1;
+    // se existe só altera a quantidade
     yield put(updateAmount(id, amount));
   } else {
-    // se não existe adiciona o novo produto com quantidade = 1
+    // se não existe adiciona o novo produto
     const data = {
       ...response.data,
-      amount: 1,
+      amount,
       priceFormatted: formatPrice(response.data.price),
     };
     yield put(addToCartSuccess(data));
