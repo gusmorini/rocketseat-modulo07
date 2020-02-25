@@ -4,7 +4,7 @@ import { call, select, put, all, takeLatest } from 'redux-saga/effects';
  */
 import { toast } from 'react-toastify';
 
-import { addToCartSuccess, updateAmount } from './actions';
+import { addToCartSuccess, updateAmountSuccess } from './actions';
 
 import api from '../../../services/api';
 import { formatPrice } from '../../../util/format';
@@ -33,7 +33,7 @@ function* addToCart({ id }) {
 
   if (exists) {
     // se existe só altera a quantidade
-    yield put(updateAmount(id, amount));
+    yield put(updateAmountSuccess(id, amount));
   } else {
     // se não existe adiciona o novo produto
     const data = {
@@ -53,4 +53,24 @@ function* addToCart({ id }) {
  * sempre que usar um effects do saga necessita utilizar yield na frente
  */
 
-export default all([takeLatest('@cart/ADD_REQUEST', addToCart)]);
+function* updateAmount({ id, amount }) {
+  // se o amount for menor ou igual a zero para aqui
+  if (amount <= 0) return;
+  // busca seu estoque na api
+  const stock = yield call(api.get, `stock/${id}`);
+  // armazena a quantidade do estoque
+  const stockAmount = stock.data.amount;
+
+  // verifica se o amount é maior que o estoque e retorna um erro
+  if (amount > stockAmount) {
+    toast.error('Estoque insulficiente');
+    return;
+  }
+  // se o estoque é compativel atualiza o carrinho
+  yield put(updateAmountSuccess(id, amount));
+}
+
+export default all([
+  takeLatest('@cart/ADD_REQUEST', addToCart),
+  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
+]);

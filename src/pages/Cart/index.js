@@ -18,13 +18,13 @@ import { Container, ProductTable, Total } from './styles';
  * desentruturação da props dentro das chaves
  */
 
-function Cart({ cart, removeFromCart, updateAmount, total }) {
+function Cart({ cart, removeFromCart, updateAmountRequest, total }) {
   function increment(prod) {
-    updateAmount(prod.id, prod.amount + 1);
+    updateAmountRequest(prod.id, prod.amount + 1);
   }
 
   function decrement(prod) {
-    updateAmount(prod.id, prod.amount - 1);
+    updateAmountRequest(prod.id, prod.amount - 1);
   }
 
   /**
