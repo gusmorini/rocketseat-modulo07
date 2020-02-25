@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { addToCartSuccess, updateAmountSuccess } from './actions';
 
 import api from '../../../services/api';
+import history from '../../../services/history';
 import { formatPrice } from '../../../util/format';
 
 function* addToCart({ id }) {
@@ -42,6 +43,8 @@ function* addToCart({ id }) {
       priceFormatted: formatPrice(response.data.price),
     };
     yield put(addToCartSuccess(data));
+    // redirecionando o usuario para o carrinho
+    history.push('/cart');
   }
 }
 
