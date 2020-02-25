@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+// para enviar mensagens na tela
+import { ToastContainer } from 'react-toastify';
 
 // configuração reactotron
 // deve vir antes da importação do store
@@ -19,6 +21,7 @@ function App() {
         <GlobalStyle />
         <Header />
         <Routes />
+        <ToastContainer autoClose={3000} />
       </BrowserRouter>
     </Provider>
   );

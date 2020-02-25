@@ -2,6 +2,7 @@ import { call, select, put, all, takeLatest } from 'redux-saga/effects';
 /**
  * call é responsável por chamar métodos asincronos que retornam uma promise
  */
+import { toast } from 'react-toastify';
 
 import { addToCartSuccess, updateAmount } from './actions';
 
@@ -25,7 +26,8 @@ function* addToCart({ id }) {
 
   // se o novo amount for maior que o estoque disponível retorna erro
   if (amount > stockAmount) {
-    console.tron.warn('ERRO');
+    // exibe o alerta na tela
+    toast.error('Estoque Insulficiente');
     return;
   }
 

@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
+// estilo toastify para mensagens na tela
+import 'react-toastify/dist/ReactToastify.css';
 
 import background from '../assets/images/background.svg';
 
